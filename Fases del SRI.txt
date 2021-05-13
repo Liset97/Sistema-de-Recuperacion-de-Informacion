@@ -1,0 +1,6 @@
+1.- Procesamiento de la consulta hecha por el usuario.
+2.- Representacion de los documentos y la consulta.
+3.- Funcionamiento del motor de busqueda.
+4.- Obtencion de resultados.
+
+
