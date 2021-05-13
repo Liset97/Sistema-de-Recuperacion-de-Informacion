@@ -89,27 +89,32 @@ def EjecutaModelo():
     print(len(Matriz))
     Modelo=md.Vectorial(Matriz,pdc.ListMaxDoc)
 
-    acumular_precision=0
-    acumular_recobrado=0
-    acumular_medidaf=0
-    acumular_medidaf1=0
-    acumular_rpresicion=0
-    acumular_fallout=0
+    Promedio={}
+    Promedio["precision"]=0
+    Promedio["recobrado"]=0
+    Promedio["medidaf"]=0
+    Promedio["medidaf1"]=0
+    Promedio["rpresicion"]=0
+    Promedio["fallout"]=0
 
     def EjecutaConsulta(num):
-        
-        new_consulta=Modelo.Retroalimentacion(pc.relevancia[str(num)],pc.ListQuery[num-1][2])
-        Modelo.Ranking_Doc(new_consulta)
-    
+        try:
+            new_consulta=Modelo.Retroalimentacion(pc.relevancia[str(num)],pc.ListQuery[num-1][2])
+            Modelo.Ranking_Doc(new_consulta)
+        except:
+            Modelo.Ranking_Doc(pc.ListQuery[num-1][2])
         
         st.warning("Procesando la query: "+str(num))
         
         Documentos_Procesados=[]
         count=1
         id_con=(num)
-        rel=pc.relevancia[str(num)]
+        try:
+            rel=pc.relevancia[str(num)]
+        except:
+            rel=[]
         #print("el len del ranking es: "+str(len(Modelo.Ranking)))
-        #st.markdown("Se recuperaron los documentos:")
+        st.markdown("Se recuperaron los documentos:")
         for i in Modelo.Ranking:
             #print(str(i[1])+" el ranking es: "+str(i[0]))
             id_doc=i[1]
@@ -121,7 +126,8 @@ def EjecutaModelo():
                 
             if count<=20:
                 rec=1
-                #st.text(str(id_doc+1)+": "+str(pdc.ListDoc[id_doc][1]))
+                if count <=10:
+                    st.text(str(id_doc+1)+": "+str(pdc.ListDoc[id_doc][1]))
             
             tupla=(id_doc,rec,count,doc_rel,id_con)
             
@@ -136,50 +142,44 @@ def EjecutaModelo():
         #Evaluacion.LlenaVariables()
 
         presicion=Evaluacion.Presicion()
-        #a=acumular_precision+presicion
-        #acumular_precision=a
+        Promedio["precision"]+=presicion
         recobrado=Evaluacion.Recobrado()
-        #b=acumular_recobrado+recobrado
-        #acumular_recobrado=b
+        Promedio["recobrado"]+=recobrado
         medidaf=Evaluacion.MedidaF(0)
-        #c=acumular_medidaf+medidaf
-        #acumular_medidaf=c
+        Promedio["medidaf"]+=medidaf
         medidaf1=Evaluacion.MedidaF1()
-        #d=acumular_medidaf1+medidaf1
-        #acumular_medidaf1=d
+        Promedio["medidaf1"]+=medidaf1
         rpresicion=Evaluacion.RPrecision(20)
-        #e=acumular_rpresicion+rpresicion
-        #acumular_rpresicion=e
+        Promedio["rpresicion"]+=rpresicion
         fallout=Evaluacion.Fallout(20)
-        #f=acumular_fallout+fallout
-        #cumular_fallout=f
+        Promedio["fallout"]+=fallout
         
 
-        st.success("Evaluacion en la query: "+str(num))
-        st.text("Esta es la precision: "+str(presicion))
-        st.text("Esta es el Recobrado: "+str(recobrado))
-        st.text("Esta es la MedidaF: "+str(medidaf))
-        st.text("Esta es la MedidaF1: "+str(medidaf1))
-        st.text("Esta es la RPresicion: "+str(rpresicion))
-        st.text("Esta es la Fallout: "+str(fallout))
+        #st.success("Evaluacion en la query: "+str(num))
+        #st.text("Esta es la precision: "+str(presicion))
+        #st.text("Esta es el Recobrado: "+str(recobrado))
+        #st.text("Esta es la MedidaF: "+str(medidaf))
+        #st.text("Esta es la MedidaF1: "+str(medidaf1))
+        #st.text("Esta es la RPresicion: "+str(rpresicion))
+        #st.text("Esta es la Fallout: "+str(fallout))
     
     for i in range(1,21):
         EjecutaConsulta(i)
-    
-    #promedio_presicion=acumular_precision/20
-   # promedio_recobrado=acumular_recobrado/20
-   # promedio_medidaf=acumular_medidaf/20
-   # promedio_medidaf1=acumular_medidaf1/20
-  #  promedio_rpresecion=acumular_rpresicion/20
-  #  promedio_fallout=acumular_fallout/20
 
-  #  st.success("Evaluacion del Modelo")
-  #  st.text("Esta es la precision: "+str(promedio_presicion))
-  #  st.text("Esta es el Recobrado: "+str(promedio_recobrado))
-  #  st.text("Esta es la MedidaF: "+str(promedio_medidaf))
-  #  st.text("Esta es la MedidaF1: "+str(promedio_medidaf1))
-   # st.text("Esta es la RPresicion: "+str(promedio_rpresecion))
-  #  st.text("Esta es la Fallout: "+str(promedio_fallout))
+    promedio_presicion=Promedio["precision"]/20
+    promedio_recobrado=Promedio["recobrado"]/20
+    promedio_medidaf=Promedio["medidaf"]/20
+    promedio_medidaf1=Promedio["medidaf1"]/20
+    promedio_rpresecion=Promedio["rpresicion"]/20
+    promedio_fallout=Promedio["fallout"]/20
+
+    st.success("Evaluacion del Modelo")
+    st.text("Esta es la precision: "+str(promedio_presicion))
+    st.text("Esta es el Recobrado: "+str(promedio_recobrado))
+    st.text("Esta es la MedidaF: "+str(promedio_medidaf))
+    st.text("Esta es la MedidaF1: "+str(promedio_medidaf1))
+    st.text("Esta es la RPresicion: "+str(promedio_rpresecion))
+    st.text("Esta es la Fallout: "+str(promedio_fallout))
 
 
     

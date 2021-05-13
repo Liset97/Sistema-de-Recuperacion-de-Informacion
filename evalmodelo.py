@@ -45,6 +45,8 @@ class Evaluacion:
         return presicion
 
     def Recobrado(self):
+        if(self.Relevantes==0):
+            return 0
         recobrado=self.Recuperados_Relevantes/self.Relevantes
         return recobrado
     
