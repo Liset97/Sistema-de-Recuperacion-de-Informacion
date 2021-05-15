@@ -163,15 +163,15 @@ def EjecutaModelo():
         #st.text("Esta es la RPresicion: "+str(rpresicion))
         #st.text("Esta es la Fallout: "+str(fallout))
     
-    for i in range(1,21):
+    for i in range(1,11):
         EjecutaConsulta(i)
 
-    promedio_presicion=Promedio["precision"]/20
-    promedio_recobrado=Promedio["recobrado"]/20
-    promedio_medidaf=Promedio["medidaf"]/20
-    promedio_medidaf1=Promedio["medidaf1"]/20
-    promedio_rpresecion=Promedio["rpresicion"]/20
-    promedio_fallout=Promedio["fallout"]/20
+    promedio_presicion=Promedio["precision"]/10
+    promedio_recobrado=Promedio["recobrado"]/10
+    promedio_medidaf=Promedio["medidaf"]/10
+    promedio_medidaf1=Promedio["medidaf1"]/10
+    promedio_rpresecion=Promedio["rpresicion"]/10
+    promedio_fallout=Promedio["fallout"]/10
 
     st.success("Evaluacion del Modelo")
     st.text("La precisión es: "+str(promedio_presicion))
