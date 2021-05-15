@@ -1,23 +1,9 @@
 import streamlit as st 
-import pandas as pd
-from PIL import Image
-import matplotlib.pyplot as plt
-
-import plotly.graph_objects as go
-import plotly.express as px
-from plotly.subplots import make_subplots
-
 
 import numpy as np
 import procdoc as pdc
 
-
-
-
-
 import proccon as pc 
-
-
 
 import modelo as md
 import evalmodelo as em
