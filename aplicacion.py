@@ -145,13 +145,13 @@ def EjecutaModelo():
         Promedio["precision"]+=presicion
         recobrado=Evaluacion.Recobrado()
         Promedio["recobrado"]+=recobrado
-        medidaf=Evaluacion.MedidaF(0)
+        medidaf=Evaluacion.MedidaF(0.5)
         Promedio["medidaf"]+=medidaf
         medidaf1=Evaluacion.MedidaF1()
         Promedio["medidaf1"]+=medidaf1
-        rpresicion=Evaluacion.RPrecision(20)
+        rpresicion=Evaluacion.RPrecision(15)
         Promedio["rpresicion"]+=rpresicion
-        fallout=Evaluacion.Fallout(20)
+        fallout=Evaluacion.Fallout(15)
         Promedio["fallout"]+=fallout
         
 
@@ -163,23 +163,23 @@ def EjecutaModelo():
         #st.text("Esta es la RPresicion: "+str(rpresicion))
         #st.text("Esta es la Fallout: "+str(fallout))
     
-    for i in range(1,11):
+    for i in range(1,21):
         EjecutaConsulta(i)
 
-    promedio_presicion=Promedio["precision"]/10
-    promedio_recobrado=Promedio["recobrado"]/10
-    promedio_medidaf=Promedio["medidaf"]/10
-    promedio_medidaf1=Promedio["medidaf1"]/10
-    promedio_rpresecion=Promedio["rpresicion"]/10
-    promedio_fallout=Promedio["fallout"]/10
+    promedio_presicion=Promedio["precision"]/20
+    promedio_recobrado=Promedio["recobrado"]/20
+    promedio_medidaf=Promedio["medidaf"]/20
+    promedio_medidaf1=Promedio["medidaf1"]/20
+    promedio_rpresecion=Promedio["rpresicion"]/20
+    promedio_fallout=Promedio["fallout"]/20
 
     st.success("Evaluacion del Modelo")
-    st.text("Esta es la precision: "+str(promedio_presicion))
-    st.text("Esta es el Recobrado: "+str(promedio_recobrado))
-    st.text("Esta es la MedidaF: "+str(promedio_medidaf))
-    st.text("Esta es la MedidaF1: "+str(promedio_medidaf1))
-    st.text("Esta es la RPresicion: "+str(promedio_rpresecion))
-    st.text("Esta es la Fallout: "+str(promedio_fallout))
+    st.text("La precisión es: "+str(promedio_presicion))
+    st.text("El Recobrado es: "+str(promedio_recobrado))
+    st.text("La MedidaF es: "+str(promedio_medidaf))
+    st.text("La MedidaF1 es: "+str(promedio_medidaf1))
+    st.text("La 15-Presicion es: "+str(promedio_rpresecion))
+    st.text("El Fallout es: "+str(promedio_fallout))
 
 
     
